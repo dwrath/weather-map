@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="module" src="js/mapbox-geocoder-utils.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css' rel='stylesheet'/>
+    <link rel="stylesheet" href="css/resets.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/weather-map.css">
+    <title>Weather Forecast</title>
+</head>
+<body>
+<div class="page-wrapper">
+    <div class="container grow justify-center">
+        <div class="row height current-weather-background curve">
+            <div class="column shrink align-center border width">
+                <!-- Current city weather-->
+                <!-- city search-->
+                <div class="row search-row justify-center align-center">
+                    <div class="search-container justify-center">
+                        <svg class="thermo" width="1200pt" height="1200pt" version="1.1" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path fill="currentColor" d="m566.59 1186.2c142.52 0 258.46-116.12 258.46-258.64 0-91.199-48-175.38-125.72-221.91v-559.2c0-73.109-59.629-132.55-132.74-132.55-73.109 0-132.74 59.445-132.74 132.55v559.2c-77.723 46.523-125.72 130.71-125.72 221.91-0.003906 142.53 115.94 258.65 258.46 258.65zm-89.762-420.12 30.891-17.137 0.003906-602.43c0-32.461 26.402-58.863 58.863-58.863 32.461 0 58.875 26.402 58.875 58.863v602.43l30.891 17.137c58.547 32.488 94.922 94.371 94.922 161.5 0 101.84-82.852 184.69-184.69 184.69-101.84 0-184.69-82.852-184.69-184.69 0-67.125 36.375-129.01 94.93-161.5z"/>
+                                <path fill="currentColor" d="m566.58 1084.5c86.566 0 157-70.43 157-157 0-57.078-30.91-109.68-80.66-137.29l-38.023-21.094c-4.3984-2.4414-7.1289-7.0781-7.1289-12.105l-0.003906-610.57c0-17.48-13.691-31.172-31.18-31.172-17.191 0-31.172 13.98-31.172 31.172v610.57c0 5.0312-2.7305 9.6641-7.1289 12.105l-38.023 21.094c-49.758 27.609-80.672 80.219-80.672 137.29 0 86.566 70.43 157 157 157z"/>
+                                <path fill="currentColor" d="m759.3 194.21h77.191v27.691h-77.191z"/>
+                                <path fill="currentColor" d="m759.3 87.602h132.57v27.691h-132.57z"/>
+                                <path fill="currentColor" d="m759.3 300.83h132.57v27.691h-132.57z"/>
+                                <path fill="currentColor" d="m759.3 407.45h95.652v27.691h-95.652z"/>
+                                <path fill="currentColor" d="m759.3 514.06h77.191v27.691h-77.191z"/>
+                                <path fill="currentColor" d="m759.3 620.68h132.57v27.691h-132.57z"/>
+                            </g>
+                        </svg>
+                        <input type="search" class="city-search" id="fly" value="San Antonio, Tx">
+                        <svg class="magnifying-glass" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search">
+                            <path fill="currentColor" d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <!--                    current temp and wind speed-->
+                    <div class="row current-weather-row">
+                        <div class="column shrink" id="current-temp">
+
+                        </div>
+                        <div class="column justify-center" id="wind-speed">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row weather-summary align-center">
+                        <div class="column align-center sr-ss" id="weather-details">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column align-center" id="weather-bio">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <!--                4-day forecast-->
+                <div class="container">
+                    <header class="row header-height align-center">
+                        <div class="column shrink">
+                            <h1 class="forecast-title gradient">World Forecast</h1>
+                        </div>
+                    </header>
+                </div>
+                <div class="container">
+                    <div class="row">
+                            <!--    Map-->
+                        <div class="column align-center">
+                            <div id='map' style='width: 600px; height: 300px;'></div>
+                        </div>
+                    </div>
+                    <div class="row ext-forecast" id="ext-forecast">
+                <!--       Weather Cards-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="module" src="js/weather-map.js"></script>
+</body>
+</html>
